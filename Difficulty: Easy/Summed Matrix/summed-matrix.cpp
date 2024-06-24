@@ -14,7 +14,6 @@ class Solution {
             return q-1;
         else 
             return n*2-q+1;
-        
     }
 };
 
