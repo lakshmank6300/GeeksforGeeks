@@ -1,26 +1,32 @@
 class Solution {
   public:
     // Function to find the shortest path from source to all other nodes
-    vector<int> BFS(vector<vector<int>>&adj ,int src){
+    void BFS(vector<vector<int>>&adj,vector<int>&res,vector<bool>&vis,int src){
+        vis[src]=true;
         queue<int>que;
-        int n=adj.size();
-        vector<int>dist(n,-1);
-        dist[src]=0;
         que.push(src);
+        res[src]=0;
         while(!que.empty()){
-            int node=que.front();
+            int top=que.front();
             que.pop();
-            for(int i=0;i<adj[node].size();i++){
-                if(dist[adj[node][i]]==-1){
-                    dist[adj[node][i]]=dist[node]+1;
-                    que.push(adj[node][i]);
-                }  
+            for(auto child: adj[top]){
+                if(!vis[child]){
+                    res[child]=res[top]+1;
+                    vis[child]=true;
+                    que.push(child);
+                }
             }
         }
-        return dist;
     }
     vector<int> shortestPath(vector<vector<int>>& adj, int src) {
         // code here
-        return BFS(adj,src);
+        int n=adj.size();
+        vector<bool>vis(n,false);
+        vector<int>res(n,-1);
+        BFS(adj,res,vis,src);
+        
+        return res;
+        
+        
     }
 };
